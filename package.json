@@ -3,18 +3,27 @@
   "version": "1.0.0",
   "main": "app.js",
   "dependencies": {
-    "express": "~4.13.1",
-    "jade": "~1.11.0",
-    "bower": "1.2.6",
+    "babel-loader": "^6.2.7",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-react": "^6.16.0",
     "body-parser": "~1.13.2",
+    "bower": "1.2.6",
     "cookie-parser": "~1.3.5",
     "debug": "~2.2.0",
+    "errorhandler": "*",
+    "express": "~4.13.1",
+    "jade": "~1.11.0",
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2",
     "serve-favicon": "~2.3.0",
-    "errorhandler": "*"
+    "webpack": "^1.13.3"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack -d --watch",
+    "build" : "webpack -p",
+    "start": "webpack -p, node app.js" 
   },
   "author": "Fan Ma",
   "license": "ISC"
