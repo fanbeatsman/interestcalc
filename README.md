@@ -20,7 +20,7 @@ This deploys a very simple node server listening on port 3000 of both public and
 ## Design choices
 
 * **jade:** Originally, since I noticed I had to support different currencies, it would be the natural follow up to support different languages. I was going to use jade's placeholder functionalities to only use placeholder strings instead of static ones. This ensures that plain text is exchangable easily from language to language. Did not have time to implement different languages.
-* **Jest** Facebook's testing framework. Never used it, but was intrigued by the notion of snapshot testing, so I gave it a try and tried to learn it. Unfortunately, the test-renderer for react has some bugs at the moment (see github issue below). Usually I would use Jasmine, but it is true I got setup way much faster with jest.
+* **Jest** Facebook's testing framework. Never used it, but I was intrigued by the notion of snapshot testing, so I gave it a try and tried to learn it. Unfortunately, the test-renderer for react has some bugs at the moment (see github issue below). Usually I would use Jasmine, but I did get setup way faster with jest.
 
 ## Possible avenues to explore
 * Switch to prod build of react
@@ -30,5 +30,5 @@ This deploys a very simple node server listening on port 3000 of both public and
 
 ## Misc.
 *Should have stuck with the deadline or at least communicated my timeline, I greatly underestimated my workload at school.
-*Should have asked questions, a lot of clarifications could have been useful. eg(did not know what was meant by changing currency, also confusions about interest, is it compounded, is it by year etc.).
+*Should have asked questions, a lot of clarifications could have been useful. eg(did not know what was meant by changing currency, also confusions about interest, is it compounded, is it by year etc.). Especially for the currency, I feel like I did not complete it the way it was intended. My currency is purely cosmetic and does not do anything, I feel like it would have made more sense if it actually converts the currencies.
 *All in all a very fun challenge and refreshing compared to the usual technical interview.
