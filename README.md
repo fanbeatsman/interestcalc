@@ -19,7 +19,7 @@ This deploys a very simple node server listening on port 3000 of both public and
 
 ## Design choices
 
-* **jade:** Originally, since I noticed I had to support different currencies, it would be the natural follow up to support different languages. I was going to use jade's placeholder functionalities to only use placeholder strings instead of static ones. This ensures that plain text is exchangable easily from language to language. Did not have time to implement different languages.
+* **jade:** Originally, since I noticed I had to support different currencies, it would be the natural follow up to support different languages. I was going to use jade's placeholder functionalities to only use placeholder strings instead of static ones. This ensures that plain text is exchangable easily from language to language. However, I did not have time to implement different languages in the end.
 * **Jest** Facebook's testing framework. Never used it, but I was intrigued by the notion of snapshot testing, so I gave it a try and tried to learn it. Unfortunately, the test-renderer for react has some bugs at the moment (see github issue below). Usually I would use Jasmine, but I did get setup way faster with jest.
 
 ## Possible avenues to explore
