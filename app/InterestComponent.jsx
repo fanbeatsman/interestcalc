@@ -31,13 +31,13 @@ class InterestComponent extends React.Component {
     if (this.state.period === 'month') {
       let totalCashAfterCompound = this.compoundInterest(this.state.initMoney, this.state.interestRate, 12, 1/12);
 
-      this.setState({finalMoney: (parseFloat(totalCashAfterCompound.toFixed(2)) - parseFloat(this.state.initMoney)) });
+      this.setState({finalMoney: (parseFloat(totalCashAfterCompound.toFixed(2)) - parseFloat(this.state.initMoney).toFixed(2)).toFixed(2) });
       this.setState({totalMoney: totalCashAfterCompound.toFixed(2)});
 
     } else if (this.state.period === 'year') {
       let totalCashAfterCompound = this.compoundInterest(this.state.initMoney, this.state.interestRate, 12, 1);
 
-      this.setState({finalMoney: (parseFloat(totalCashAfterCompound.toFixed(2) - parseFloat(this.state.initMoney)))});
+      this.setState({finalMoney: (parseFloat(totalCashAfterCompound.toFixed(2) - parseFloat(this.state.initMoney).toFixed(2))).toFixed(2)});
       this.setState({totalMoney: (totalCashAfterCompound.toFixed(2))});
     }
     //React setState is not synchronous so the following code can be used to guarantee behaviour. However, this is obviously not optimal. The above implementation is more optimal
