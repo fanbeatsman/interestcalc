@@ -1,0 +1,29 @@
+/* istanbul ignore next */'use strict';var /* istanbul ignore next */_react = require('react'); /* istanbul ignore next */var _react2 = _interopRequireDefault(_react);
+var /* istanbul ignore next */_reactAddonsTestUtils = require('react-addons-test-utils'); /* istanbul ignore next */var _reactAddonsTestUtils2 = _interopRequireDefault(_reactAddonsTestUtils);
+var /* istanbul ignore next */_InterestComponent = require('../app/InterestComponent.jsx'); /* istanbul ignore next */var _InterestComponent2 = _interopRequireDefault(_InterestComponent);
+var /* istanbul ignore next */_reactTestRenderer = require('react-test-renderer'); /* istanbul ignore next */var _reactTestRenderer2 = _interopRequireDefault(_reactTestRenderer);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+test('Compound interest is calculated correctly', function () {
+  var component = /* istanbul ignore next */_reactTestRenderer2.default.create(
+  /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_InterestComponent2.default, /* istanbul ignore next */null));
+
+  var tree = component.toJSON();
+  expect(tree).toMatchSnapshot();
+
+  // manually trigger the callback
+  //ar interest = tree.props.compoundInterest(100,10,12,1);
+  var input = component.find(function (element) /* istanbul ignore next */{return element.id === 'interestTextBox';});
+  /* istanbul ignore next */_react2.default.addons.TestUtils.Simulate.change(input, { target: { value: '100' } });
+  //var textInput = ReactTestUtils.findRenderedDOMComponentWithTag(text, 'input');
+  //textInput.getDOMNode().value = '100';
+  //tree.props.handleInterestRateChange();
+  // re-rendering
+  tree = component.toJSON();
+  expect(tree).toMatchSnapshot();
+
+  // manually trigger the callback
+  //tree.props.onMouseLeave();
+  // re-rendering
+  //tree = component.toJSON();
+  //expect(tree).toMatchSnapshot();
+});

@@ -1,0 +1,118 @@
+/* istanbul ignore next */'use strict';Object.defineProperty(exports, "__esModule", { value: true });var _createClass = function () {function defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}return function (Constructor, protoProps, staticProps) {if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;};}();var /* istanbul ignore next */_react = require('react'); /* istanbul ignore next */var _react2 = _interopRequireDefault(_react);
+var /* istanbul ignore next */_reactDom = require('react-dom'); /* istanbul ignore next */var _reactDom2 = _interopRequireDefault(_reactDom);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self, call) {if (!self) {throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call && (typeof call === "object" || typeof call === "function") ? call : self;}function _inherits(subClass, superClass) {if (typeof superClass !== "function" && superClass !== null) {throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;}var
+
+InterestComponent = function (_React$Component) {_inherits(InterestComponent, _React$Component);
+
+
+  // Use React Uncontrolled component
+
+  function /* istanbul ignore next */InterestComponent(props) {/* istanbul ignore next */_classCallCheck(this, InterestComponent);var _this = _possibleConstructorReturn(this, (InterestComponent.__proto__ || Object.getPrototypeOf(InterestComponent)).call(this,
+    props));
+
+
+    /* istanbul ignore next */_this.state = { interestRate: 0.0, finalMoney: 0.0, initMoney: 0.0, totalMoney: 0.0, period: 'month', status: '' };
+    /* istanbul ignore next */_this.handleInterestRateChange = /* istanbul ignore next */_this.handleInterestRateChange.bind( /* istanbul ignore next */_this);
+    /* istanbul ignore next */_this.handleMoneyChange = /* istanbul ignore next */_this.handleMoneyChange.bind( /* istanbul ignore next */_this);
+    /* istanbul ignore next */_this.handleSubmit = /* istanbul ignore next */_this.handleSubmit.bind( /* istanbul ignore next */_this);
+    /* istanbul ignore next */_this.handlePeriodChange = /* istanbul ignore next */_this.handlePeriodChange.bind( /* istanbul ignore next */_this);
+    /* istanbul ignore next */_this.computeInterest = /* istanbul ignore next */_this.computeInterest.bind( /* istanbul ignore next */_this);
+    /* istanbul ignore next */_this.compoundInterest = /* istanbul ignore next */_this.compoundInterest.bind( /* istanbul ignore next */_this); /* istanbul ignore next */return _this;
+  }
+
+  //A = P (1 + r/n)^nt --- Compound interest helper function
+  _createClass(InterestComponent, [{ key: 'compoundInterest', value: function compoundInterest(P, r, n, t) {
+      var tmp = 1 + r / 100 / n;
+      return P * Math.pow(tmp, n * t);
+    }
+
+    //Compute the interest using compound interest formula
+  }, { key: 'computeInterest', value: function computeInterest() {
+      if (this.state.period === 'month') {
+        var totalCashAfterCompound = this.compoundInterest(this.state.initMoney, this.state.interestRate, 12, 1 / 12);
+
+        this.setState({ finalMoney: parseFloat(totalCashAfterCompound.toFixed(2)) - parseFloat(this.state.initMoney) });
+        this.setState({ totalMoney: totalCashAfterCompound.toFixed(2) });
+
+      } else if (this.state.period === 'year') {
+        var _totalCashAfterCompound = this.compoundInterest(this.state.initMoney, this.state.interestRate, 12, 1);
+
+        this.setState({ finalMoney: parseFloat(_totalCashAfterCompound.toFixed(2) - parseFloat(this.state.initMoney)) });
+        this.setState({ totalMoney: _totalCashAfterCompound.toFixed(2) });
+      }
+      //React setState is not synchronous so the following code can be used to guarantee behaviour. However, this is obviously not optimal. The above implementation is more optimal
+      //this.forceUpdate( () => {this.setState({totalMoney: (this.state.initMoney + this.state.finalMoney)});} );
+    }
+
+    //Handles submit button firing
+  }, { key: 'handleSubmit', value: function handleSubmit(event) {
+      this.computeInterest();
+    }
+
+
+    //State change handlers---------------------------------
+  }, { key: 'handleInterestRateChange', value: function handleInterestRateChange(
+    event) {
+      if (isNaN(event.target.value)) {
+        this.setState({ status: 'Entered an invalid Interest Rate, please enter a number' });
+        this.setState({ finalMoney: 0 });
+        this.setState({ initMoney: 0 });
+        return;
+      }
+      this.setState({ status: "" });
+      this.setState({ interestRate: parseFloat(event.target.value) });
+    } }, { key: 'handleMoneyChange', value: function handleMoneyChange(
+
+    event) {
+      if (isNaN(event.target.value)) {
+        this.setState({ status: 'Entered an invalid cash value, please enter a number' });
+        this.setState({ finalMoney: 0 });
+        this.setState({ initMoney: 0 });
+        return;
+      }
+      this.setState({ status: "" });
+      this.setState({ initMoney: parseFloat(event.target.value) });
+    } }, { key: 'handlePeriodChange', value: function handlePeriodChange(
+
+    event) {
+      this.setState({ period: String(event.target.value) });
+    }
+
+
+    //React Render ---------------------------------------
+  }, { key: 'render', value: function render() {
+      return (
+        /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'div', /* istanbul ignore next */null,
+          /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'h3', /* istanbul ignore next */null, /* istanbul ignore next */'Please enter an amount in the first box and a monthly interest rate in the second box. Then press Submit to calculate your final cash value.'),
+          /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'div', /* istanbul ignore next */null,
+            /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'div', /* istanbul ignore next */null,
+              /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'input', /* istanbul ignore next */{ id: 'interestTextBox', type: 'text', placeholder: 'yearly interest', onChange: this.handleInterestRateChange }), /* istanbul ignore next */' %',
+              /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'input', /* istanbul ignore next */{ id: 'moneyTextBox', type: 'text', placeholder: '$$$', onChange: this.handleMoneyChange }),
+              /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'select', /* istanbul ignore next */{ name: 'period', onChange: this.handlePeriodChange },
+                /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'option', /* istanbul ignore next */{ value: 'month' }, /* istanbul ignore next */'Month'),
+
+
+                /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'option', /* istanbul ignore next */{ value: 'year' }, /* istanbul ignore next */'Year')),
+
+
+
+              /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'button', /* istanbul ignore next */{ onClick: this.handleSubmit }, /* istanbul ignore next */'Submit')),
+
+
+
+            /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'div', /* istanbul ignore next */null,
+              /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'span', /* istanbul ignore next */null, this.state.status)),
+
+            /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'div', /* istanbul ignore next */null, /* istanbul ignore next */'Interest : ',
+              /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'span', /* istanbul ignore next */null, this.state.finalMoney)),
+
+            /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'div', /* istanbul ignore next */null, /* istanbul ignore next */'Cash after interest : ',
+              /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'span', /* istanbul ignore next */null, this.state.totalMoney)))));
+
+
+
+
+    } }]);return InterestComponent;}( /* istanbul ignore next */_react2.default.Component); /* istanbul ignore next */exports.default =
+
+
+
+InterestComponent;

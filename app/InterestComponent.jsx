@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 
 class InterestComponent extends React.Component {
 
+
   // Use React Uncontrolled component
 
   constructor (props) {
@@ -18,7 +19,7 @@ class InterestComponent extends React.Component {
     this.compoundInterest = this.compoundInterest.bind(this)
   }
 
-  //A = P (1 + r/n)^nt --- Helper function
+  //A = P (1 + r/n)^nt --- Compound interest helper function
   compoundInterest (P, r, n, t) {
     var tmp = (1 + (r / 100) / n);
     return P * Math.pow(tmp, (n * t));
@@ -81,11 +82,13 @@ class InterestComponent extends React.Component {
   render () {
     return (
       <div>
-        <h3>Please enter an amount in the first box and a monthly interest rate in the second box. Then press Submit to calculate your final cash value.</h3>
+        <h3>Please enter an amount in the first box and a yearly interest rate in the second box. Then press Submit to calculate your final cash value.</h3>
         <div>
           <div>
-            <input type='text' placeholder='yearly interest' onChange={this.handleInterestRateChange} /> %
-            <input type='text' placeholder='$$$' onChange={this.handleMoneyChange} />
+          <span> Interest Rate </span>
+            <input id = 'interestTextBox' type='text' placeholder='yearly interest' onChange={this.handleInterestRateChange} /> 
+            <span> Cash </span>
+            <input id = 'moneyTextBox' type='text' placeholder='$$$' onChange={this.handleMoneyChange} />
             <select name='period' onChange={this.handlePeriodChange}>
               <option value='month'>
                 Month
