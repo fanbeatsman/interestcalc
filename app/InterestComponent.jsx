@@ -1,66 +1,117 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react'
+import ReactDOM from 'react-dom'
 
 class InterestComponent extends React.Component {
 
-//Use Uncontrolled component
+  // Use React Uncontrolled component
 
-  constructor(props) {
-    super(props);
-    this.state = {interestRate : 0.0, finalMoney: 0.0, initMoney: 0.0, value: 0.0};
-    this.handleInterestRateChange = this.handleInterestRateChange.bind(this);
-    this.handleMoneyChange = this.handleMoneyChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.computeInterest = this.computeInterest.bind(this);
+  constructor (props) {
+    super(props)
+    
+
+    this.state = {interestRate: 0.0, finalMoney: 0.0, initMoney: 0.0, totalMoney: 0.0, period: 'month', status: ''}
+    this.handleInterestRateChange = this.handleInterestRateChange.bind(this)
+    this.handleMoneyChange = this.handleMoneyChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handlePeriodChange = this.handlePeriodChange.bind(this)
+    this.computeInterest = this.computeInterest.bind(this)
+    this.compoundInterest = this.compoundInterest.bind(this)
   }
 
+  //A = P (1 + r/n)^nt --- Helper function
+  compoundInterest (P, r, n, t) {
+    var tmp = (1 + (r / 100) / n);
+    return P * Math.pow(tmp, (n * t));
+  }
+
+  //Compute the interest using compound interest formula
   computeInterest () {
-    let tmp = this.state.initMoney * this.state.interestRate/100;
-    this.setState({finalMoney: tmp});
+    if (this.state.period === 'month') {
+      let totalCashAfterCompound = this.compoundInterest(this.state.initMoney, this.state.interestRate, 12, 1/12);
+
+      this.setState({finalMoney: (parseFloat(totalCashAfterCompound.toFixed(2)) - parseFloat(this.state.initMoney)) });
+      this.setState({totalMoney: totalCashAfterCompound.toFixed(2)});
+
+    } else if (this.state.period === 'year') {
+      let totalCashAfterCompound = this.compoundInterest(this.state.initMoney, this.state.interestRate, 12, 1);
+
+      this.setState({finalMoney: (parseFloat(totalCashAfterCompound.toFixed(2) - parseFloat(this.state.initMoney)))});
+      this.setState({totalMoney: (totalCashAfterCompound.toFixed(2))});
+    }
+    //React setState is not synchronous so the following code can be used to guarantee behaviour. However, this is obviously not optimal. The above implementation is more optimal
+    //this.forceUpdate( () => {this.setState({totalMoney: (this.state.initMoney + this.state.finalMoney)});} );
   }
 
-  handleSubmit(event) {
+  //Handles submit button firing
+  handleSubmit (event) {
     this.computeInterest();
   }
 
-  handleInterestRateChange(event) {
-    this.setState({interestRate: parseFloat(event.target.value)});
-    console.log(parseInt(event.target.value));
-    
+
+  //State change handlers---------------------------------
+
+  handleInterestRateChange (event) {
+    if (isNaN(event.target.value)) {
+      this.setState({status: 'Entered an invalid Interest Rate, please enter a number'});
+      this.setState({finalMoney: 0});
+      this.setState({initMoney: 0});
+      return
+    }
+    this.setState({status: ""});
+    this.setState({interestRate: parseFloat(event.target.value)})
   }
 
-  handleMoneyChange(event) {
-    this.setState({initMoney: parseFloat(event.target.value)});
+  handleMoneyChange (event) {
+    if (isNaN(event.target.value)) {
+      this.setState({status: 'Entered an invalid cash value, please enter a number'});
+      this.setState({finalMoney: 0});
+      this.setState({initMoney: 0});
+      return
+    }
+    this.setState({status: ""});
+    this.setState({initMoney: parseFloat(event.target.value)})
   }
 
-  render() {
+  handlePeriodChange (event) {
+    this.setState({period: String(event.target.value)})
+  }
+
+
+  //React Render ---------------------------------------
+  render () {
     return (
-      <h3>
-      Please enter an amount in the first box and an interest rate in the second box. Then press Submit to calculate your final cash value.
-      </h3>
       <div>
-      
-        Likes : <span>{this.state.finalMoney}</span>
-      <div>
-        <input type="text"
-          placeholder="10.00"
-          onChange={this.handleMoneyChange} />
-          %
-        <input type="text"
-          placeholder="4"
-          onChange={this.handleInterestRateChange} />
-        <button onClick={this.handleSubmit}>
-          Submit
-        </button>
+        <h3>Please enter an amount in the first box and a monthly interest rate in the second box. Then press Submit to calculate your final cash value.</h3>
+        <div>
+          <div>
+            <input type='text' placeholder='yearly interest' onChange={this.handleInterestRateChange} /> %
+            <input type='text' placeholder='$$$' onChange={this.handleMoneyChange} />
+            <select name='period' onChange={this.handlePeriodChange}>
+              <option value='month'>
+                Month
+              </option>
+              <option value='year'>
+                Year
+              </option>
+            </select>
+            <button onClick={this.handleSubmit}>
+              Submit
+            </button>
+          </div>
+          <div>
+            <span>{this.state.status}</span>
+          </div>
+          <div>
+            Interest : <span>{this.state.finalMoney}</span>
+          </div>
+          <div>
+            Cash after interest : <span>{this.state.totalMoney}</span>
+          </div>
+        </div>
       </div>
-
-
-        Cash after interest : <span>{this.state.finalMoney}</span>
-      
-      </div>
-    );
+    )
   }
 
 }
 
-export default InterestComponent;
+export default InterestComponent
