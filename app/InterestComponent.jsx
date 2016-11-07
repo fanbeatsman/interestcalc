@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import currencies from '../currencies.json'
 
 class InterestComponent extends React.Component {
 
@@ -9,7 +10,7 @@ class InterestComponent extends React.Component {
   constructor (props) {
     super(props)
     
-
+    this.allCurrencies = Object.keys(currencies);
     this.state = {interestRate: 0.0, finalMoney: 0.0, initMoney: 0.0, totalMoney: 0.0, period: 'month', status: ''}
     this.handleInterestRateChange = this.handleInterestRateChange.bind(this)
     this.handleMoneyChange = this.handleMoneyChange.bind(this)
@@ -84,11 +85,11 @@ class InterestComponent extends React.Component {
       <div>
         <h3>Please enter an amount in the first box and a yearly interest rate in the second box. Then press Submit to calculate your final cash value.</h3>
         <div>
-          <div>
+          <div class = 'style-4'>
           <span> Interest Rate </span>
-            <input id = 'interestTextBox' type='text' placeholder='yearly interest' onChange={this.handleInterestRateChange} /> 
+            <input class = 'style-4' id = 'interestTextBox' type='text' placeholder='yearly interest' onChange={this.handleInterestRateChange} /> 
             <span> Cash </span>
-            <input id = 'moneyTextBox' type='text' placeholder='$$$' onChange={this.handleMoneyChange} />
+            <input class = 'style-4' id = 'moneyTextBox' type='text' placeholder='$$$' onChange={this.handleMoneyChange} />
             <select name='period' onChange={this.handlePeriodChange}>
               <option value='month'>
                 Month
@@ -96,6 +97,16 @@ class InterestComponent extends React.Component {
               <option value='year'>
                 Year
               </option>
+            </select>
+            <select name='currency'>
+            {this.allCurrencies.map(function(curr,i){
+              return (
+            <option>
+            {curr}
+            </option>
+          );
+            })} 
+
             </select>
             <button onClick={this.handleSubmit}>
               Submit

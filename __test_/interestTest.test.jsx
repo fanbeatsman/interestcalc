@@ -3,6 +3,8 @@ import ReactTestUtils from 'react-addons-test-utils';
 import InterestComponent from '../app/InterestComponent.jsx';
 //import renderer from 'react-test-renderer';
 
+
+//A lot of commented code because of https://github.com/facebook/react/issues/7386
 test('Compound interest is calculated correctly Year', () => {
 
   var component = ReactTestUtils.renderIntoDocument(<InterestComponent />);
